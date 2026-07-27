@@ -30,3 +30,7 @@ form — an uploaded logo is saved in `localStorage` and takes priority over
 - `style.css` — A4 page styling + form layout
 - `app.js` — form binding, localStorage persistence, PDF export
 - `logo.png` — the university logo used in the preview
+- `html2pdf.bundle.min.js` — vendored copy of [html2pdf.js](https://github.com/eKoopmans/html2pdf.js)
+  (used for the PDF export). Kept locally instead of loading from a CDN so
+  the tool keeps working even if a network/ad-blocker/firewall blocks
+  third-party scripts.
