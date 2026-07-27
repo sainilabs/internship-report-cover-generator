@@ -19,18 +19,14 @@ they persist across reloads. Use **Reset** to clear everything.
 
 ## Logo
 
-Drop a logo image named `logo.png` (or `.jpg` / `.jpeg` / `.webp` / `.svg`)
-into this folder and the app will pick it up automatically. If no such file
-is present, a built-in SVG emblem (`logo.js`) is used as a fallback, or you
-can upload one manually from the form.
+`logo.png` in this folder is the logo used by default. Replace that file
+(keep the same name) to change it, or upload a different one from the
+form — an uploaded logo is saved in `localStorage` and takes priority over
+`logo.png` until you clear it.
 
 ## Files
 
 - `index.html` — page structure / form / preview markup
 - `style.css` — A4 page styling + form layout
 - `app.js` — form binding, localStorage persistence, PDF export
-- `logo.js` — fallback inline SVG emblem
-- `logo.png` / `igu logo.png` — the university logo used in the preview
-- `make_logo.py` — helper script used to clean up a low-res source logo
-  (background removal / upscaling); not needed if you supply your own
-  high-resolution logo file
+- `logo.png` — the university logo used in the preview

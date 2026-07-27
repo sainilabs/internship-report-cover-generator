@@ -1,7 +1,7 @@
 /* ============================================================
    Internship Report Cover Page Generator
    - Form -> live A4 preview -> high-res PDF
-   - Logo: folder ka logo.png (auto) > uploaded logo > built-in SVG emblem
+   - Logo: folder ka logo.png (default) > uploaded logo (agar user daale)
    - Data + logo browser me (localStorage) save rehte hain
    ============================================================ */
 
@@ -24,8 +24,8 @@ const DEFAULTS = {
   uniRoll: "241111101442"
 };
 
-/* folder me ye naam mile to automatic use ho jayega */
-const AUTO_LOGO_FILES = ["logo.png", "logo.jpg", "logo.jpeg", "logo.webp", "logo.svg"];
+/* folder ka default logo (final, sirf ek hi file use hoti hai) */
+const DEFAULT_LOGO_FILE = "logo.png";
 
 const inputs = Array.from(document.querySelectorAll("[data-bind]"));
 const page = document.getElementById("page");
@@ -34,11 +34,6 @@ const logoWrap = document.getElementById("logoWrap");
 const logoImg = document.getElementById("logoImg");
 const logoInput = document.getElementById("logoInput");
 const qualitySelect = document.getElementById("pdfQuality");
-
-/* ---------- built-in SVG emblem inject ---------- */
-if (window.IGU_LOGO_SVG) {
-  logoWrap.insertAdjacentHTML("beforeend", window.IGU_LOGO_SVG.trim());
-}
 
 /* ---------- helpers ---------- */
 
@@ -93,7 +88,7 @@ function load() {
 
   const stored = localStorage.getItem(LOGO_KEY);
   if (stored) setLogo(stored);
-  else tryAutoLogo();
+  else loadDefaultLogo();
 
   applyToPreview();
 }
@@ -106,21 +101,14 @@ function setLogo(src) {
 }
 
 function clearLogo() {
-  logoImg.removeAttribute("src");
-  logoWrap.classList.remove("has-logo");
   localStorage.removeItem(LOGO_KEY);
   logoInput.value = "";
+  loadDefaultLogo();
 }
 
-/* folder me logo.png / logo.jpg ... mile to chup-chaap use kar lo */
-function tryAutoLogo(index = 0) {
-  if (index >= AUTO_LOGO_FILES.length) return;
-  /* cache-bust: logo file replace karne par turant naya version dikhe */
-  const url = AUTO_LOGO_FILES[index] + "?v=" + Date.now();
-  const test = new Image();
-  test.onload = () => setLogo(url);
-  test.onerror = () => tryAutoLogo(index + 1);
-  test.src = url;
+/* cache-bust: logo.png replace karne par turant naya version dikhe */
+function loadDefaultLogo() {
+  setLogo(DEFAULT_LOGO_FILE + "?v=" + Date.now());
 }
 
 logoInput.addEventListener("change", () => {

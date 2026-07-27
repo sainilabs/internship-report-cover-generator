@@ -90,14 +90,13 @@
       <fieldset>
         <legend>Logo</legend>
         <p class="hint">
-          Abhi asli IGU logo (<b>logo.png</b>) use ho raha hai &mdash; official brochure se liya gaya
-          sabse bada available version. Isse behtar/HD file ho to same naam <b>logo.png</b> se folder me
-          replace kar do, ya niche se upload karo.
+          IGU ka final logo (<b>logo.png</b>) already lagaya hua hai. Isse badalna ho to same naam
+          <b>logo.png</b> se folder me replace kar do, ya niche se upload karo.
         </p>
         <label class="file-label">Custom logo (optional)
           <input type="file" id="logoInput" accept="image/*" />
         </label>
-        <button type="button" id="btnLogoClear" class="ghost small">Default emblem par wapas</button>
+        <button type="button" id="btnLogoClear" class="ghost small">Uploaded logo hatao (folder wala wapas)</button>
       </fieldset>
 
       <fieldset>
@@ -134,7 +133,6 @@
 
               <div class="logo-wrap" id="logoWrap">
                 <img id="logoImg" alt="University logo" />
-                <!-- default SVG emblem yahan logo.js se inject hota hai -->
               </div>
 
               <h3 class="university">
@@ -170,7 +168,6 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="logo.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
