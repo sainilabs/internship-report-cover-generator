@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Internship Report Cover Generator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1>Internship Report Cover Page Generator</h1>
+  <div class="actions">
+    <button id="btnPdf" class="primary">Download PDF</button>
+    <button id="btnPrint">Print</button>
+    <button id="btnReset" class="ghost">Reset</button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ================= FORM ================= -->
+  <section class="form-panel" aria-label="Details form">
+    <form id="coverForm" autocomplete="off">
+
+      <fieldset>
+        <legend>Student Details</legend>
+
+        <label>Name
+          <input type="text" id="f_name" data-bind="name" placeholder="HARSHIT" />
+        </label>
+
+        <label>Class
+          <input type="text" id="f_class" data-bind="klass" placeholder="B.A. 2nd Year" />
+        </label>
+
+        <label>College Roll No.
+          <input type="text" id="f_croll" data-bind="collegeRoll" placeholder="1241203151" />
+        </label>
+
+        <label>University Roll No.
+          <input type="text" id="f_uroll" data-bind="uniRoll" placeholder="241111101442" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Report Details</legend>
+
+        <label>College Name
+          <input type="text" data-bind="college" placeholder="GOVERNMENT COLLEGE MAHENDERGARH" />
+        </label>
+
+        <label>Report Title
+          <input type="text" data-bind="title" placeholder="INTERNSHIP REPORT" />
+        </label>
+
+        <label>Subject
+          <input type="text" data-bind="subject" placeholder="AYUSHMAN BHARAT" />
+        </label>
+
+        <label>University (line 1)
+          <input type="text" data-bind="uni1" placeholder="INDIRA GANDHI UNIVERSITY," />
+        </label>
+
+        <label>University (line 2)
+          <input type="text" data-bind="uni2" placeholder="MEERPUR-REWARI" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Supervisor &amp; Coordinator</legend>
+
+        <label>Heading
+          <input type="text" data-bind="supHead" placeholder="Supervisor &amp; Coordinator" />
+        </label>
+
+        <label>Name 1
+          <input type="text" data-bind="sup1" placeholder="Dr. Pinki Yadav" />
+        </label>
+
+        <label>Name 2
+          <input type="text" data-bind="sup2" placeholder="Dr. Ashok Kumar" />
+        </label>
+
+        <label>Name 3 (optional)
+          <input type="text" data-bind="sup3" placeholder="" />
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Logo</legend>
+        <p class="hint">
+          Abhi asli IGU logo (<b>logo.png</b>) use ho raha hai &mdash; official brochure se liya gaya
+          sabse bada available version. Isse behtar/HD file ho to same naam <b>logo.png</b> se folder me
+          replace kar do, ya niche se upload karo.
+        </p>
+        <label class="file-label">Custom logo (optional)
+          <input type="file" id="logoInput" accept="image/*" />
+        </label>
+        <button type="button" id="btnLogoClear" class="ghost small">Default emblem par wapas</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>PDF Quality</legend>
+        <label>Resolution
+          <select id="pdfQuality">
+            <option value="3">High (~285 DPI)</option>
+            <option value="4" selected>Very High (~380 DPI)</option>
+            <option value="5">Ultra (~475 DPI, heavy)</option>
+          </select>
+        </label>
+        <p class="hint">Ultra me file badi banegi aur generate hone me thoda time lagega.</p>
+      </fieldset>
+
+    </form>
+  </section>
+
+  <!-- ================= PREVIEW ================= -->
+  <section class="preview-panel">
+    <div class="page-scaler">
+      <div id="page" class="page">
+        <div class="frame-outer">
+          <div class="frame-inner">
+            <div class="content">
+
+              <h1 class="college" data-out="college">GOVERNMENT COLLEGE MAHENDERGARH</h1>
+
+              <h2 class="title" data-out="title">INTERNSHIP REPORT</h2>
+
+              <p class="subject">
+                <span class="sub-label">Subject :</span>
+                <span class="sub-value" data-out="subject">AYUSHMAN BHARAT</span>
+              </p>
+
+              <div class="logo-wrap" id="logoWrap">
+                <img id="logoImg" alt="University logo" />
+                <!-- default SVG emblem yahan logo.js se inject hota hai -->
+              </div>
+
+              <h3 class="university">
+                <span data-out="uni1">INDIRA GANDHI UNIVERSITY,</span><br />
+                <span data-out="uni2">MEERPUR-REWARI</span>
+              </h3>
+
+              <div class="footer-grid">
+                <div class="col-left">
+                  <p class="col-head" data-out="supHead">Supervisor &amp; Coordinator</p>
+                  <p class="sup-name" data-out="sup1">Dr. Pinki Yadav</p>
+                  <p class="sup-name" data-out="sup2">Dr. Ashok Kumar</p>
+                  <p class="sup-name" data-out="sup3"></p>
+                </div>
+                <div class="col-right">
+                  <p class="col-head">Submitted By</p>
+                  <table class="detail-table">
+                    <tr><td class="k">Name</td><td class="c">:</td><td class="v strong" data-out="name">HARSHIT</td></tr>
+                    <tr><td class="k">Class</td><td class="c">:</td><td class="v" data-out="klass">B.A. 2nd Year</td></tr>
+                    <tr><td class="k">College Roll No.</td><td class="c">:</td><td class="v" data-out="collegeRoll">1241203151</td></tr>
+                    <tr><td class="k">University Roll No.</td><td class="c">:</td><td class="v" data-out="uniRoll">241111101442</td></tr>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="logo.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
