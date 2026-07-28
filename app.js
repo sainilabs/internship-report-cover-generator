@@ -15,7 +15,7 @@ const LOGO_KEY = "internshipCover.logo"; /* purana key - cleanup ke liye */
 const OPTION_SETS = {
   college: [
     { key: "gc_mgarh",    en: "GOVERNMENT COLLEGE MAHENDERGARH",               hi: "राजकीय महाविद्यालय, महेंद्रगढ़" },
-    { key: "gpgcw_mgarh", en: "GOVERNMENT PG COLLEGE FOR WOMEN, MAHENDERGARH", hi: "राजकीय महिला महाविद्यालय, महेंद्रगढ़" }
+    { key: "gpgcw_mgarh", en: "GOVERNMENT COLLEGE FOR WOMEN, MAHENDERGARH", hi: "राजकीय महिला महाविद्यालय, महेंद्रगढ़" }
   ],
   klass: [
     { key: "ba2",       en: "B.A. 2nd Year",                 hi: "बी.ए. द्वितीय वर्ष" },
@@ -32,7 +32,8 @@ const OPTION_SETS = {
     { key: "gram_panchayat", en: "GRAM PANCHAYAT",           hi: "ग्राम पंचायत" },
     { key: "beti_bachao",    en: "BETI BACHAO BETI PADHAO",  hi: "बेटी बचाओ बेटी पढ़ाओ" },
     { key: "ayushman",       en: "AYUSHMAN BHARAT",          hi: "आयुष्मान भारत" },
-    { key: "nagar_palika",   en: "NAGAR PALIKA",             hi: "नगर पालिका" }
+    { key: "nagar_palika",   en: "NAGAR PALIKA",             hi: "नगर पालिका" },
+    { key: "custom",         en: "Other (type below)",       hi: "अन्य (नीचे लिखें)" }
   ]
 };
 
@@ -52,10 +53,11 @@ const I18N = {
     lblUniRoll: "University Roll No.",
     lblCollege: "College Name",
     lblSubject: "Subject",
+    lblCustomSubject: "Custom subject",
     legendStudent: "Student Details",
     legendReport: "Report Details",
-    lblSup1: "Name 1",
-    lblSup2: "Name 2",
+    lblSup1: "Name 1 (optional)",
+    lblSup2: "Name 2 (optional)",
     lblSup3: "Name 3 (optional)",
     lblSup4: "Name 4 (optional)",
     lblSup5: "Name 5 (optional)",
@@ -74,10 +76,11 @@ const I18N = {
     lblUniRoll: "विश्वविद्यालय रोल नं.",
     lblCollege: "महाविद्यालय का नाम",
     lblSubject: "विषय",
+    lblCustomSubject: "स्वयं का विषय",
     legendStudent: "विद्यार्थी विवरण",
     legendReport: "रिपोर्ट विवरण",
-    lblSup1: "नाम 1",
-    lblSup2: "नाम 2",
+    lblSup1: "नाम 1 (वैकल्पिक)",
+    lblSup2: "नाम 2 (वैकल्पिक)",
     lblSup3: "नाम 3 (वैकल्पिक)",
     lblSup4: "नाम 4 (वैकल्पिक)",
     lblSup5: "नाम 5 (वैकल्पिक)",
@@ -86,7 +89,7 @@ const I18N = {
 };
 
 /* language ke hisab se badalne wale free-text fields */
-const LANG_FIELDS = ["name", "sup1", "sup2", "sup3", "sup4", "sup5"];
+const LANG_FIELDS = ["name", "customSubject", "sup1", "sup2", "sup3", "sup4", "sup5"];
 
 /* dono language me same rehne wale fields */
 const SHARED_DEFAULTS = {
@@ -98,12 +101,12 @@ const SHARED_DEFAULTS = {
 };
 
 const LANG_DEFAULTS = {
-  en: { name: "HARSHIT", sup1: "Dr. Pinki Yadav",  sup2: "Dr. Ashok Kumar", sup3: "", sup4: "", sup5: "" },
-  hi: { name: "हर्षित",   sup1: "डॉ. पिंकी यादव", sup2: "डॉ. अशोक कुमार",  sup3: "", sup4: "", sup5: "" }
+  en: { name: "HARSHIT", customSubject: "", sup1: "Dr. Pinki Yadav",  sup2: "Dr. Ashok Kumar", sup3: "", sup4: "", sup5: "" },
+  hi: { name: "हर्षित",   customSubject: "", sup1: "डॉ. पिंकी यादव", sup2: "डॉ. अशोक कुमार",  sup3: "", sup4: "", sup5: "" }
 };
 
 /* ye fields khali reh sakte hain - default se fill nahi karne */
-const OPTIONAL_KEYS = ["sup3", "sup4", "sup5"];
+const OPTIONAL_KEYS = ["customSubject", "sup1", "sup2", "sup3", "sup4", "sup5"];
 
 const DEFAULT_LOGO_FILE = "logo.png";
 const PDF_SCALE = 4; /* ~380 DPI on A4 */
@@ -185,7 +188,8 @@ function fillLangFields() {
     if (!isLangField(k)) return;
     const saved = store[lang][k];
     setFieldValue(i, saved !== undefined ? saved : LANG_DEFAULTS[lang][k]);
-    i.placeholder = LANG_DEFAULTS[lang][k] || "";
+    if (k === "customSubject") i.placeholder = lang === "hi" ? "अपना विषय लिखें" : "Type your subject";
+    else i.placeholder = LANG_DEFAULTS[lang][k] || "";
   });
 }
 
@@ -219,6 +223,15 @@ function applyToPreview() {
   Object.keys(OPTION_SETS).forEach(key => {
     render(key, optionLabel(key, data[key] || SHARED_DEFAULTS[key]));
   });
+
+  /* Subject "Other" pe custom text dikhao; row bhi tabhi visible */
+  const customRow = document.getElementById("customSubjectRow");
+  const isCustom = data.subject === "custom";
+  if (customRow) customRow.classList.toggle("show", isCustom);
+  if (isCustom) {
+    const txt = data.customSubject || (lang === "hi" ? "विषय लिखें" : "Enter subject");
+    render("subject", txt);
+  }
 
   ["collegeRoll", "uniRoll"].forEach(key => {
     render(key, data[key] !== "" ? data[key] : SHARED_DEFAULTS[key]);

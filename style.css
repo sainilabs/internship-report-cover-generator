@@ -161,6 +161,10 @@ select {
   cursor: pointer;
 }
 html[lang="hi"] .check-row.auto-hindi-row { display: flex; }
+
+/* Custom subject box: sirf "Other" chunne par dikhta hai */
+.custom-row { display: none; }
+.custom-row.show { display: block; }
 .check-row input[type="checkbox"] { width: 16px; height: 16px; margin: 0; accent-color: var(--green); }
 
 /* ================= Preview scaling ================= */

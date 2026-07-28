@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Internship Report Cover Generator</title>
 <!-- ?v= badalne se browser ka purana cache use nahi hota -->
-<link rel="stylesheet" href="style.css?v=2" />
+<link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
 
@@ -66,6 +66,11 @@
 
         <label><span data-i18n="lblSubject">Subject</span>
           <select data-bind="subject"></select>
+        </label>
+
+        <label class="custom-row" id="customSubjectRow">
+          <span data-i18n="lblCustomSubject">Custom subject</span>
+          <input type="text" data-bind="customSubject" />
         </label>
       </fieldset>
 
@@ -154,6 +159,6 @@
 </main>
 
 <script src="html2pdf.bundle.min.js"></script>
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
