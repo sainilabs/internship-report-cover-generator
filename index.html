@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,7 +10,14 @@
 
 <header class="topbar">
   <h1>Internship Report Cover Page Generator</h1>
+
   <div class="actions">
+    <!-- Poora cover format English / Hindi me switch hota hai -->
+    <div class="lang-switch" role="group" aria-label="Format language">
+      <button type="button" class="lang-btn is-active" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" class="lang-btn" data-lang="hi" aria-pressed="false">हिन्दी</button>
+    </div>
+
     <button id="btnPdf" class="primary">Download PDF</button>
     <button id="btnPrint">Print</button>
     <button id="btnReset" class="ghost">Reset</button>
@@ -24,91 +31,65 @@
     <form id="coverForm" autocomplete="off">
 
       <fieldset>
-        <legend>Student Details</legend>
+        <legend data-i18n="legendStudent">Student Details</legend>
 
-        <label>Name
+        <label><span data-i18n="lblName">Name</span>
           <input type="text" id="f_name" data-bind="name" placeholder="HARSHIT" />
         </label>
 
-        <label>Class
-          <input type="text" id="f_class" data-bind="klass" placeholder="B.A. 2nd Year" />
+        <label><span data-i18n="lblClass">Class</span>
+          <select id="f_class" data-bind="klass"></select>
         </label>
 
-        <label>College Roll No.
+        <label><span data-i18n="lblCollegeRoll">College Roll No.</span>
           <input type="text" id="f_croll" data-bind="collegeRoll" placeholder="1241203151" />
         </label>
 
-        <label>University Roll No.
+        <label><span data-i18n="lblUniRoll">University Roll No.</span>
           <input type="text" id="f_uroll" data-bind="uniRoll" placeholder="241111101442" />
         </label>
+
+        <label class="check-row auto-hindi-row">
+          <input type="checkbox" id="autoHindi" checked />
+          <span data-i18n="autoHindiLabel">Auto Hindi (Roman → हिन्दी)</span>
+        </label>
+
       </fieldset>
 
       <fieldset>
-        <legend>Report Details</legend>
+        <legend data-i18n="legendReport">Report Details</legend>
 
-        <label>College Name
-          <input type="text" data-bind="college" placeholder="GOVERNMENT COLLEGE MAHENDERGARH" />
+        <label><span data-i18n="lblCollege">College Name</span>
+          <select data-bind="college"></select>
         </label>
 
-        <label>Report Title
-          <input type="text" data-bind="title" placeholder="INTERNSHIP REPORT" />
-        </label>
-
-        <label>Subject
-          <input type="text" data-bind="subject" placeholder="AYUSHMAN BHARAT" />
-        </label>
-
-        <label>University (line 1)
-          <input type="text" data-bind="uni1" placeholder="INDIRA GANDHI UNIVERSITY," />
-        </label>
-
-        <label>University (line 2)
-          <input type="text" data-bind="uni2" placeholder="MEERPUR-REWARI" />
+        <label><span data-i18n="lblSubject">Subject</span>
+          <select data-bind="subject"></select>
         </label>
       </fieldset>
 
       <fieldset>
-        <legend>Supervisor &amp; Coordinator</legend>
+        <legend data-i18n="supHead">Supervisor &amp; Coordinator</legend>
 
-        <label>Heading
-          <input type="text" data-bind="supHead" placeholder="Supervisor &amp; Coordinator" />
-        </label>
-
-        <label>Name 1
+        <label><span data-i18n="lblSup1">Name 1</span>
           <input type="text" data-bind="sup1" placeholder="Dr. Pinki Yadav" />
         </label>
 
-        <label>Name 2
+        <label><span data-i18n="lblSup2">Name 2</span>
           <input type="text" data-bind="sup2" placeholder="Dr. Ashok Kumar" />
         </label>
 
-        <label>Name 3 (optional)
+        <label><span data-i18n="lblSup3">Name 3 (optional)</span>
           <input type="text" data-bind="sup3" placeholder="" />
         </label>
-      </fieldset>
 
-      <fieldset>
-        <legend>Logo</legend>
-        <p class="hint">
-          IGU ka final logo (<b>logo.png</b>) already lagaya hua hai. Isse badalna ho to same naam
-          <b>logo.png</b> se folder me replace kar do, ya niche se upload karo.
-        </p>
-        <label class="file-label">Custom logo (optional)
-          <input type="file" id="logoInput" accept="image/*" />
+        <label><span data-i18n="lblSup4">Name 4 (optional)</span>
+          <input type="text" data-bind="sup4" placeholder="" />
         </label>
-        <button type="button" id="btnLogoClear" class="ghost small">Uploaded logo hatao (folder wala wapas)</button>
-      </fieldset>
 
-      <fieldset>
-        <legend>PDF Quality</legend>
-        <label>Resolution
-          <select id="pdfQuality">
-            <option value="3">High (~285 DPI)</option>
-            <option value="4" selected>Very High (~380 DPI)</option>
-            <option value="5">Ultra (~475 DPI, heavy)</option>
-          </select>
+        <label><span data-i18n="lblSup5">Name 5 (optional)</span>
+          <input type="text" data-bind="sup5" placeholder="" />
         </label>
-        <p class="hint">Ultra me file badi banegi aur generate hone me thoda time lagega.</p>
       </fieldset>
 
     </form>
@@ -124,10 +105,11 @@
 
               <h1 class="college" data-out="college">GOVERNMENT COLLEGE MAHENDERGARH</h1>
 
-              <h2 class="title" data-out="title">INTERNSHIP REPORT</h2>
+              <!-- Report title fixed hai (form se editable nahi), sirf language se badalta hai -->
+              <h2 class="title" data-i18n="reportTitle">INTERNSHIP REPORT</h2>
 
               <p class="subject">
-                <span class="sub-label">Subject :</span>
+                <span class="sub-label" data-i18n="subjectLabel">Subject :</span>
                 <span class="sub-value" data-out="subject">AYUSHMAN BHARAT</span>
               </p>
 
@@ -135,25 +117,28 @@
                 <img id="logoImg" alt="University logo" />
               </div>
 
+              <!-- University line fixed hai (form se editable nahi) -->
               <h3 class="university">
-                <span data-out="uni1">INDIRA GANDHI UNIVERSITY,</span><br />
-                <span data-out="uni2">MEERPUR-REWARI</span>
+                <span data-i18n="uni1">INDIRA GANDHI UNIVERSITY,</span><br />
+                <span data-i18n="uni2">MEERPUR-REWARI</span>
               </h3>
 
               <div class="footer-grid">
                 <div class="col-left">
-                  <p class="col-head" data-out="supHead">Supervisor &amp; Coordinator</p>
+                  <p class="col-head" data-i18n="supHead">Supervisor &amp; Coordinator</p>
                   <p class="sup-name" data-out="sup1">Dr. Pinki Yadav</p>
                   <p class="sup-name" data-out="sup2">Dr. Ashok Kumar</p>
                   <p class="sup-name" data-out="sup3"></p>
+                  <p class="sup-name" data-out="sup4"></p>
+                  <p class="sup-name" data-out="sup5"></p>
                 </div>
                 <div class="col-right">
-                  <p class="col-head">Submitted By</p>
+                  <p class="col-head" data-i18n="submittedBy">Submitted By</p>
                   <table class="detail-table">
-                    <tr><td class="k">Name</td><td class="c">:</td><td class="v strong" data-out="name">HARSHIT</td></tr>
-                    <tr><td class="k">Class</td><td class="c">:</td><td class="v" data-out="klass">B.A. 2nd Year</td></tr>
-                    <tr><td class="k">College Roll No.</td><td class="c">:</td><td class="v" data-out="collegeRoll">1241203151</td></tr>
-                    <tr><td class="k">University Roll No.</td><td class="c">:</td><td class="v" data-out="uniRoll">241111101442</td></tr>
+                    <tr><td class="k" data-i18n="lblName">Name</td><td class="c">:</td><td class="v strong" data-out="name">HARSHIT</td></tr>
+                    <tr><td class="k" data-i18n="lblClass">Class</td><td class="c">:</td><td class="v" data-out="klass">B.A. 2nd Year</td></tr>
+                    <tr><td class="k" data-i18n="lblCollegeRoll">College Roll No.</td><td class="c">:</td><td class="v" data-out="collegeRoll">1241203151</td></tr>
+                    <tr><td class="k" data-i18n="lblUniRoll">University Roll No.</td><td class="c">:</td><td class="v" data-out="uniRoll">241111101442</td></tr>
                   </table>
                 </div>
               </div>

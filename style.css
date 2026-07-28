@@ -33,7 +33,33 @@ body {
 
 .topbar h1 { font-size: 17px; margin: 0; font-weight: 600; }
 
-.actions { display: flex; gap: 8px; }
+.actions { display: flex; gap: 8px; align-items: center; }
+
+/* ---- Language toggle (English / Hindi) ---- */
+.lang-switch {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  background: #eef1f5;
+  border: 1px solid var(--ui-border);
+  border-radius: 10px;
+  margin-right: 4px;
+}
+.lang-switch .lang-btn {
+  border: 0;
+  background: transparent;
+  border-radius: 7px;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #55617a;
+}
+.lang-switch .lang-btn:hover { background: #e2e7ee; }
+.lang-switch .lang-btn.is-active {
+  background: #fff;
+  color: var(--green);
+  box-shadow: 0 1px 3px rgba(16, 38, 92, .16);
+}
 
 button {
   font: inherit;
@@ -123,6 +149,20 @@ select {
 
 .hint { font-size: 11.5px; color: #6b7688; margin: 6px 0 10px; line-height: 1.45; }
 
+/* Auto-Hindi checkbox: sirf Hindi mode me dikhta hai */
+.check-row {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #33405a;
+  cursor: pointer;
+}
+html[lang="hi"] .check-row.auto-hindi-row { display: flex; }
+.check-row input[type="checkbox"] { width: 16px; height: 16px; margin: 0; accent-color: var(--green); }
+
 /* ================= Preview scaling ================= */
 .preview-panel { display: flex; justify-content: center; }
 
@@ -140,6 +180,18 @@ select {
   color: var(--ink);
   font-family: Cambria, Georgia, "Times New Roman", serif;
 }
+
+/* Hindi format: Devanagari font + thoda relaxed line-height (matra clip na ho) */
+.page.lang-hi {
+  font-family: "Nirmala UI", "Noto Sans Devanagari", "Mangal", Cambria, serif;
+}
+.page.lang-hi .college { line-height: 1.35; }
+.page.lang-hi .title { font-size: 28pt; line-height: 1.3; }
+.page.lang-hi .university { line-height: 1.4; }
+.page.lang-hi .col-head,
+.page.lang-hi .sup-name,
+.page.lang-hi .detail-table td { line-height: 1.45; }
+.page.lang-hi .subject { font-size: 17.5pt; line-height: 1.4; }
 
 .frame-outer {
   width: 100%;
@@ -236,8 +288,8 @@ select {
   align-items: flex-start;
 }
 
-.col-left { flex: 0 0 46%; }
-.col-right { flex: 0 0 52%; }
+.col-left { flex: 0 1 44%; min-width: 0; }
+.col-right { flex: 1 1 54%; min-width: 0; overflow: hidden; }
 
 .col-head {
   margin: 0 0 2.5mm;
@@ -254,12 +306,17 @@ select {
   font-size: 12.5pt;
   font-weight: 700;
   color: #111;
+  overflow-wrap: anywhere;
 }
 .sup-name:empty { display: none; }
 
-.detail-table { border-collapse: collapse; }
+.detail-table {
+  border-collapse: collapse;
+  max-width: 100%;
+  font-size: 10.5pt;   /* JS isko auto-fit karta hai */
+}
 .detail-table td {
-  font-size: 10.5pt;
+  font-size: 1em;
   font-weight: 700;
   padding: 0.7mm 0;
   vertical-align: top;
@@ -268,7 +325,10 @@ select {
 .detail-table td.k { padding-right: 3mm; white-space: nowrap; }
 .detail-table td.c { padding-right: 2.5mm; }
 .detail-table td.v { white-space: nowrap; }
-.detail-table td.v.strong { font-size: 11.5pt; }
+.detail-table td.v.strong { font-size: 1.1em; }
+
+/* fallback: font chhota karke bhi na samaye to value wrap ho jaaye */
+.detail-table.wrap-values td.v { white-space: normal; overflow-wrap: anywhere; }
 
 /* ================= Print ================= */
 @page { size: A4; margin: 0; }
