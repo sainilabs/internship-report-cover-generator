@@ -15,7 +15,7 @@ const LOGO_KEY = "internshipCover.logo"; /* purana key - cleanup ke liye */
 const OPTION_SETS = {
   college: [
     { key: "gc_mgarh",    en: "GOVERNMENT COLLEGE MAHENDERGARH",               hi: "राजकीय महाविद्यालय, महेंद्रगढ़" },
-    { key: "gpgcw_mgarh", en: "GOVERNMENT PG COLLEGE FOR WOMEN, MAHENDERGARH", hi: "राजकीय स्नातकोत्तर महिला महाविद्यालय, महेंद्रगढ़" }
+    { key: "gpgcw_mgarh", en: "GOVERNMENT PG COLLEGE FOR WOMEN, MAHENDERGARH", hi: "राजकीय महिला महाविद्यालय, महेंद्रगढ़" }
   ],
   klass: [
     { key: "ba2",       en: "B.A. 2nd Year",                 hi: "बी.ए. द्वितीय वर्ष" },
